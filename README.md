@@ -23,7 +23,7 @@ Ensure the following dependencies are installed and available in your system's P
 
 You must also set your OpenRouter API key in the environment:
 
-export OPENROUTER\_API\_KEY="your\_api\_key\_here"
+export OPENROUTER_API_KEY="your_api_key_here"
 
 ## Installation
 
