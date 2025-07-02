@@ -74,7 +74,11 @@ JSON_PAYLOAD=$(jq -n \
     model: $model,
     messages: [{role: "user", content: $prompt}],
     temperature: 0.0,
-    top_p : 1.0
+    top_p : 1.0,
+    top_k : 0,
+    seed : 1234,
+    frequency_penalty : 0,
+    presence_penalty : 0
   }'
 )
 
