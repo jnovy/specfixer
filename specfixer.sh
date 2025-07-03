@@ -36,7 +36,7 @@ fi
 SPEC_CONTENT=$(<"$SPEC")
 
 # Generate rpmlint output
-RPMLINT_LOG=$(rpmlint mc.spec | grep -e W: -e E:)
+RPMLINT_LOG=$(rpmlint "$SPEC" | grep -e W: -e E:)
 
 if [[ -z "$RPMLINT_LOG" ]]; then
     echo "Warning: rpmlint found no errors or warnings."
