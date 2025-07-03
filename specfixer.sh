@@ -38,8 +38,17 @@ SPEC_CONTENT=$(<"$SPEC")
 # Generate rpmlint output
 RPMLINT_LOG=$(rpmlint "$SPEC" | grep -e W: -e E:)
 
-if [[ -z "$RPMLINT_LOG" ]]; then
-    echo "Warning: rpmlint found no errors or warnings."
+# Conditionally build the prompt section for rpmlint output
+RPMLINT_PROMPT_SECTION=""
+if [[ -n "$RPMLINT_LOG" ]]; then
+    # The log is not empty, so create the section to be added to the prompt
+    read -r -d '' RPMLINT_PROMPT_SECTION <<EOF
+
+rpmlint output:
+----
+$RPMLINT_LOG
+----
+EOF
 fi
 
 # Build initial prompt
@@ -55,10 +64,7 @@ Follow these rules strictly:
 - Always escape macros in comments, e.g. #%a needs to be #%%a in comment.
 - Do not make any changes which can trigger rpmlint warnings or build failure.
 
-rpmlint output:
-----
-$RPMLINT_LOG
-----
+$RPMLINT_PROMPT_SECTION
 
 Original .spec file:
 ----
