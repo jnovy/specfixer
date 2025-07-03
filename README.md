@@ -1,7 +1,9 @@
 ```markdown
 # SpecFixer - AI-Enhanced Fedora RPM Spec File Fixer
 
-SpecFixer is a Bash script that uses rpmlint diagnostics and an OpenRouter-hosted AI model to automatically fix and modernize Fedora RPM .spec files. It helps maintain packaging guideline compliance while improving readability and consistency.
+SpecFixer is a Bash script that uses rpmlint diagnostics and an OpenRouter-hosted AI model
+to automatically fix and modernize Fedora RPM .spec files. It helps maintain packaging
+guideline compliance while improving readability and consistency.
 
 ## Features
 
@@ -56,7 +58,8 @@ Fixed spec saved to mc.spec-fixed.spec
 
 - The script requires a valid OpenRouter API key with access to the specified model.
 - Only .spec files are supported.
-- If no warnings or errors are detected by rpmlint, the script still proceeds, but AI corrections may be minimal.
+- If no warnings or errors are detected by rpmlint, the script still proceeds,
+  but AI corrections may be minimal.
 
 ## License
 
