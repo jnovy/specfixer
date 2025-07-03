@@ -36,7 +36,7 @@ fi
 SPEC_CONTENT=$(<"$SPEC")
 
 # Generate rpmlint output
-RPMLINT_LOG=$(rpmlint "$SPEC" | grep -e W: -e E:)
+RPMLINT_LOG=$(rpmlint "$SPEC" 2>/dev/null | grep -e W: -e E: || true)
 
 # Conditionally build the prompt section for rpmlint output
 RPMLINT_PROMPT_SECTION=""
@@ -107,6 +107,27 @@ if ! echo "$RESPONSE" | jq . >/dev/null 2>&1; then
     exit 1
 fi
 
+# Check for API errors
+API_ERROR=$(echo "$RESPONSE" | jq -r '.error.message // empty' 2>/dev/null || true)
+if [[ -n "$API_ERROR" ]]; then
+    echo "Error: API returned an error: $API_ERROR"
+    exit 1
+fi
+
+# Check if choices array exists and is not empty
+CHOICES_COUNT=$(echo "$RESPONSE" | jq -r '.choices | length' 2>/dev/null || echo "0")
+if [[ "$CHOICES_COUNT" -eq 0 ]]; then
+    echo "Error: API response contains no choices."
+    exit 1
+fi
+
+# Check if the first choice has a message
+MESSAGE_EXISTS=$(echo "$RESPONSE" | jq -r '.choices[0].message // empty' 2>/dev/null || true)
+if [[ -z "$MESSAGE_EXISTS" ]]; then
+    echo "Error: API response missing message content."
+    exit 1
+fi
+
 # Extract assistant's reply
 FIXED_SPEC=$(echo "$RESPONSE" | jq -r '.choices[0].message.content' || true)
 
@@ -123,6 +144,6 @@ if [[ ! -s "$SPEC-fixed.spec" ]]; then
     exit 1
 fi
 
-rpmlint $SPEC-fixed.spec
+rpmlint "$SPEC-fixed.spec"
 
 echo "Fixed spec saved to $SPEC-fixed.spec"
