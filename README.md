@@ -1,9 +1,6 @@
-```markdown
 # SpecFixer - AI-Enhanced Fedora RPM Spec File Fixer
 
-SpecFixer is a Bash script that uses rpmlint diagnostics and an OpenRouter-hosted AI model
-to automatically fix and modernize Fedora RPM .spec files. It helps maintain packaging
-guideline compliance while improving readability and consistency.
+SpecFixer is a Bash script that uses rpmlint diagnostics and an OpenRouter-hosted AI model to automatically fix and modernize Fedora RPM .spec files. It helps maintain packaging guideline compliance while improving readability and consistency.
 
 ## Features
 
@@ -25,17 +22,23 @@ Ensure the following dependencies are installed and available in your system's P
 
 You must also set your OpenRouter API key in the environment:
 
+```bash
 export OPENROUTER_API_KEY="your_api_key_here"
+```
 
 ## Installation
 
 Clone or download this script and make it executable:
 
+```bash
 chmod +x specfixer.sh
+```
 
 ## Usage
 
+```bash
 ./specfixer.sh path/to/your.spec
+```
 
 The script performs the following:
 
@@ -47,19 +50,22 @@ The script performs the following:
 
 ## Example
 
+```bash
 ./specfixer.sh mc.spec
+```
 
 Output:
 
-OpenRouter query with microsoft/mai-ds-r1\:free took 4 seconds. <rpmlint output>
+```
+OpenRouter query with microsoft/mai-ds-r1:free took 4 seconds. <rpmlint output>
 Fixed spec saved to mc.spec-fixed.spec
+```
 
 ## Notes
 
 - The script requires a valid OpenRouter API key with access to the specified model.
 - Only .spec files are supported.
-- If no warnings or errors are detected by rpmlint, the script still proceeds,
-  but AI corrections may be minimal.
+- If no warnings or errors are detected by rpmlint, the script still proceeds, but AI corrections may be minimal.
 
 ## License
 
@@ -70,4 +76,3 @@ GPLv3 License. Feel free to modify and use this script in your packaging workflo
 - OpenRouter.ai – for LLM access
 - Fedora Packaging Guidelines
 - rpmlint – for spec quality diagnostics
-```
